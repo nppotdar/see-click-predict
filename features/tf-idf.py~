@@ -1,0 +1,49 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Nov 09 19:35:46 2013
+
+@author: Standard User
+"""
+
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfTransformer
+
+import sys
+import numpy
+import csv
+
+input_file = '../files/test.csv'
+output_file = '../files/tfidf_test.data'
+input_data = csv.DictReader(open(input_file, 'rb'), delimiter=',', quotechar='"')
+description = ""
+description_list = []
+num_votes = []
+num_comments = []
+num_views = []
+
+count_vectorizer = CountVectorizer()
+for row in input_data:
+        description_list.append(row['description'])
+        num_votes.append(row['num_votes'])
+        num_comments.append(row['num_comments'])
+        num_views.append(row['num_views'])
+        
+freq_term_matrix = count_vectorizer.fit_transform(description_list)
+tfidf = TfidfTransformer(norm="l2")
+tfidf.fit(freq_term_matrix)
+tf_idf_matrix = tfidf.transform(freq_term_matrix)
+
+description_sum = []
+
+header_fields = "tf-idf_norm"
+i = 0
+for row in tf_idf_matrix:
+#    value = ""
+#    if row.sum()/row.shape[0] > 0: 
+     value = str(row.sum()/row.shape[0]) 
+#    else: 
+#        value = ("# %f - %f - %f") % (float(num_votes[i]), float(num_comments[i]), float(num_views[i]) )
+     description_sum.append( value )
+#    i = i + 1
+numpy.savetxt(output_file, numpy.asarray(description_sum), fmt="%s")
+print "FIN"

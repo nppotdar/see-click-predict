@@ -1,0 +1,12 @@
+
+def generate(input_file, output_file):
+    input_data = numpy.recfromcsv(input_file)
+    print input_data[1:10]
+    
+    
+
+if __name__ == "__main__":
+    if( sys.argv.length <= 0 ):
+        print "pass arguments <input-train-data-file> <output-file>"
+    else:
+        generate(sys.argv[0], sys.argv[1])
