@@ -12,6 +12,9 @@ import sys
 import numpy
 import csv
 
+max_train_data = 13.402245661
+max_test_data = 12.1851684564
+ 
 input_file = '../files/test.csv'
 output_file = '../files/tfidf_test.csv'
 
@@ -35,7 +38,7 @@ header_fields = "tf-idf_norm"
 i = 0
 for row in tf_idf_matrix:
      value = str(row.sum()/row.shape[0]) 
-     description_sum.append( value )
+     description_sum.append( value/max_test_data )
 
 numpy.savetxt(output_file, numpy.asarray(description_sum), fmt="%s")
 print "FIN"

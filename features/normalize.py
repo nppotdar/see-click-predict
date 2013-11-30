@@ -1,7 +1,7 @@
 import csv
 import numpy
 from sklearn import preprocessing
-days_input_file = "../../see-click-predict/res/days_feature_test.csv"
+days_input_file = "../res/days_feature_test.csv"
 tfidf_input_file = "../files/tfidf_test.data"
 output_file = "../files/normalized_features_test.csv"
 
@@ -18,10 +18,9 @@ for row in tfidf_input_data:
 
 print len(tfidf_list)
 print len(days_list)
-matrix = (tfidf_list, days_list)
+matrix = (days_list, tfidf_list)
 matrix = numpy.array(matrix)
-min_max_scaler = preprocessing.MinMaxScaler()
-scaled = min_max_scaler.fit_transform(matrix)
+
 
 output_writer = csv.writer(open(output_file, "wb"), delimiter = ",", quotechar = '"', quoting = csv.QUOTE_MINIMAL )
 
